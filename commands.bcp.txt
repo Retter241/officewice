@@ -1,0 +1,11 @@
+git init 
+
+git clone https://github.com/Retter241/officewice.git
+
+cd officewice
+
+php composer update
+
+php artisan serve 
+
+127.0.0.1:8000/
