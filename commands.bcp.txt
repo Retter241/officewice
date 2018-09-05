@@ -9,3 +9,11 @@ php composer update
 php artisan serve 
 
 127.0.0.1:8000/
+
+
+
+/*******************/
+
+
+Обновление таблицы
+php artisan make:migration ChandeUsersTable --table=users    -> php artisan migrate
