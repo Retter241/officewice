@@ -17,7 +17,14 @@ trait AuthenticatesUsers
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        if (view()->exists('admin.login')) {
+            return view('admin.login')->with('title' , 'Вход в админку');
+        }
+        else {
+            //return view('auth.login');
+            return  abort(404);
+        }
+
     }
 
     /**
@@ -142,6 +149,7 @@ trait AuthenticatesUsers
     public function username()
     {
         return 'email';
+        //return 'login';
     }
 
     /**
