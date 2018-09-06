@@ -1,1 +1,9 @@
-admin.navigation .php  template
+@if($menu)
+    <div class="menu classic">
+
+        {!! $menu->asUl(['class'=>'menu']) !!}
+
+    </div>
+@endif
+
+sdfsdfs

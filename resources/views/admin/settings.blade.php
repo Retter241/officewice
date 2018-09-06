@@ -2,12 +2,6 @@
 <h2>{{ Auth::user()->login }}</h2>
 
 
-{{--
-@section('navigation')
-    {!! $navigation !!}
-@endsection
-
---}}
-
+@extends('admin.navigation')
 
 <a href="{{ route('logout') }}"> Выйти </a>
