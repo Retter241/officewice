@@ -92,7 +92,6 @@ class UpdateAllController extends Controller
         $clear_data = $build_data;
         return $clear_data;
     }
-
     /*
      * принимает чистый массив
      * пишет в бд
