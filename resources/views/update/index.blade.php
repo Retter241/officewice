@@ -8,5 +8,6 @@
 
     ?>
 
-
-{{ var_dump($response_message) }}
+<pre>
+    {{ var_dump($response_message) }}
+</pre>
