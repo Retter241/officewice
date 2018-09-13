@@ -88,6 +88,16 @@ class UpdateAllController extends Controller
 
     public function processingData($build_data)
     {
+        $clear_data =[];
+        foreach ($build_data as $k => $v) {
+
+            if ($v['UF_CRM_D_ITINERARY'] !== NULL) {
+
+                //$string = titleParse($v['UF_CRM_D_ITINERARY']);
+                //$clear_data['from'] = $string['from'];
+            }
+
+        }
 
         $clear_data = $build_data;
         return $clear_data;
@@ -95,7 +105,7 @@ class UpdateAllController extends Controller
     /*
      * принимает чистый массив
      * пишет в бд
-     * возвращает страку ответа (~время обновления)
+     * возвращает строку ответа (~время обновления)
      */
     public function addDataToDb($clear_data)
     {
@@ -111,5 +121,13 @@ class UpdateAllController extends Controller
         $response_message = $clear_data;
 
         return $response_message;
+    }
+
+    public function titleParse () {
+
+        //$string['from']
+        //$string['to']
+        $string = '';
+        return $string;
     }
 }
