@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//раздел авторизации
 Route::get('login' , 'Auth\AuthController@showLoginForm'); //отображение формы -> отправка post
 Route::post('login' , 'Auth\AuthController@login'); // для входа ( после отправки формы )
 //Route::get('logout' , 'Auth\AuthController@logout');//для выхода
@@ -27,7 +28,7 @@ Route::get('logout' , function (){
 //Route::get('reg' , 'Auth\RegisterController');//для регистрации, тестовый режим
 
 
-//admin
+//раздел администрирования
 Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function(){
 
 	//admin
@@ -38,7 +39,20 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'] , function(){
 
 Auth::routes();
 
+//главная страница - замена index
 Route::get('/home', 'HomeController@index')->name('home');
 
+//страница вывода всех стран ( направлений )
+Route::get('/countries', 'CountryController@getCountries')->name('countries');
 
+//вывод одной страны - всех сделок по ней
+Route::get('/countries/{country?}', 'CountryOneController@getAllDeals');
+
+
+//вывод одной сделки - вся информация
+Route::get('/deal/{deal_id?}', 'DealController@index')->where('deal_id' , '[\w-]+');
+
+
+
+//раздел обновления от битрикса в БД
 Route::get('/update', 'UpdateAllController@index');//->name('update');

@@ -17,3 +17,88 @@ php artisan serve
 
 Обновление таблицы
 php artisan make:migration ChandeUsersTable --table=users    -> php artisan migrate
+
+
+
+
+
+
+
+
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateDealsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('deals', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->integer('deal_id')->unsigned()->default(1);
+            $table->foreign('order_id')->references('id')->on('orders');
+
+
+
+
+            $table->integer('id_bitrix');
+            $table->string('deal_status');
+            $table->string('deal_number');
+            $table->string('deal_title');
+
+
+
+
+            $table->integer('deal_location_from')->unsigned()->default(1);
+            $table->foreign('country_id')->references('id')->on('countries');
+
+
+            $table->integer('deal_location_to')->unsigned()->default(1);
+            $table->foreign('country_id')->references('id')->on('countries');
+
+
+
+            $table->string('deal_location_across');
+            $table->string('deal_delivery_date');
+            $table->string('deal_loading_date');
+            $table->string('deal_transport_type');
+            $table->string('deal_cargo_params');
+            $table->string('deal_special_conditions');
+
+
+            $table->integer('deal_manager_id')->unsigned()->default(1);
+            $table->foreign('manager_id')->references('id')->on('managers');
+
+
+
+                //создание поля для связывания с таблицей user
+                $table->integer('user_id')->unsigned()->default(1);
+        //создание внешнего ключа для поля 'user_id', который связан с полем id таблицы 'users'
+        $table->foreign('user_id')->references('id')->on('users');
+
+
+
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('deals');
+    }
+}
