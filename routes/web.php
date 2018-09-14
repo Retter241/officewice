@@ -50,7 +50,7 @@ Route::get('/countries/{country?}', 'CountryOneController@getAllDeals');
 
 
 //вывод одной сделки - вся информация
-Route::get('/deal/{deal_id?}', 'DealController@index')->where('deal_id' , '[\w-]+');
+Route::get('/deal/{deal_id?}', 'DealController@getDeal')->where('deal_id' , '[\w-]+');
 
 
 

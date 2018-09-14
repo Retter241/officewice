@@ -27,7 +27,10 @@ class CountryOneController extends Controller
 
 
 
-        return view('country', ['all_deals' => $all_deals , 'req' =>   $id ]);
+        return view('country', [
+            'all_deals' => $all_deals ,
+            'req' =>   $id
+        ]);
 
 
 
