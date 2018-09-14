@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class UpdateAllController extends Controller
 {
     ////https://crm.ow.by/rest/113/z2uwj3jxwdebkz46/profile/
-    //// https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyBvt1FlJNvMNFHpvplRmRVnHWJGbwVJIto
+    //// https://maps.googleapis.com/maps/api/geocode/json?latlng=57.5888943,34.5686003&key=AIzaSyD4IezL9BaTBFs9Kry-HtJuJOcIZAPIc90
 
     protected $auth = array('access_token' => 'z2uwj3jxwdebkz46', 'domain' => 'crm.ow.by');
     protected $method;
@@ -43,7 +43,7 @@ class UpdateAllController extends Controller
     {
 
 
-        $c = curl_init('https://' . $auth['domain'] . '/rest/' . $method . '.json?select[0]=UF_*');
+        $c = curl_init('https://' . $auth['domain'] . '/rest/' . $method . '.json?select[0]=UF_*'); //?select[0]=UF_*
         //$params["auth"] = $auth["access_token"];
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($c, CURLOPT_POST, true);
@@ -69,7 +69,7 @@ class UpdateAllController extends Controller
         $data = [];
         foreach ($result as $item => $list) {
             foreach ($list as $k => $v) {
-                if ($v['UF_SH_LOCATION_FROM'] !== NULL) {
+                if (isset($v['UF_SH_LOCATION_FROM']) !== NULL) {
                     $data[$k] = $v;
                 }
             }
@@ -88,6 +88,37 @@ class UpdateAllController extends Controller
 
     public function processingData($build_data)
     {
+
+        /*
+         *7409   7392-openedY closedN
+         * Нам надо :
+         *  Сделка :
+         *      откуда -?
+         *      куда -?    ----->['UF_SH_LOCATION_FROM'] = L1112.907|AБрест=AБрестская область=AБеларусь=52.0976214=23.7340503|BТула=BТульская область=BРоссия=54.204836=37.6184915
+         *      через -?
+         *      статус [opened->Y,closed->N,is_new->Y] -?
+         *      вид транспорта -? ["UF_CRM_1483674091"]
+         *      V-вид погрузки -["UF_CRM_1483674041"] =  "верхняя" или "боковая, задняя погрузка" или "Конвой по РБ"
+         *      V-вид груза ["UF_CRM_1474277632"] = "кожа выделанная"
+         *      вес груза -?
+         *      размер груза -?
+         *      обьем груза -?
+         *      V-дата загрузки - ['BEGINDATE'] или  ["UF_CRM_1483628167"]-array=> string(25) "2018-09-12T00:00:00+03:00"
+         *      специальные пометки ["UF_CRM_1483673991"] ="масса контейнера 14 тонн" или "перевозка ж/д"
+         *
+         *  Менеджеры:
+         *      name
+         *      phone
+         *      desc
+         *  Страна
+         *      короткое название
+         *      полное название
+         *      флаг
+         *
+         *
+         */
+
+
 
         $clear_data = $build_data;
         return $clear_data;
