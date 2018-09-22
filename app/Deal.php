@@ -31,4 +31,5 @@ class Deal extends Model
     {
         return $this->belongsTo('App\Country');
     }
+
 }

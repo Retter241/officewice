@@ -31,8 +31,7 @@ class UpdateAllController extends Controller
 
 
         $response_message = $this->addDataToDb($clear_data);
-
-
+        // echo Deal::latest()->first()->id_bitrix;
 
 
         return view('update.index')->with('response_message', $response_message);
@@ -91,17 +90,36 @@ class UpdateAllController extends Controller
 
                     //стадии сделок - после 3й исполнитель выбран - ?
                     $status = '';
-                    if ($v['STAGE_ID'] === 'NEW') {
-                        $status .= 'Новая - Да';
-                    } elseif ($v['STAGE_ID'] === 1) {
-                        $status .= 'В оработке';
-                    } elseif ($v['STAGE_ID'] === 2) {
-                        $status .= 'Проверена страховка перевозчика';
-                    } elseif ($v['STAGE_ID'] < 3) {
-                        $status .= 'Получена заявка';
-                    } else {
-                        $status .= 'Счет на предопл. заказчику...{ и дальше нам не надо?}';
+
+                    switch ($v['STAGE_ID']) {
+                        case  'NEW':
+                            $status .= 'Новая - Да';
+                            break;
+                        case  1:
+                            $status .= 'В оработке';
+                            break;
+                        case 2:
+                            $status .= 'Проверена страховка перевозчика';
+                            break;
+                        case $v['STAGE_ID'] < 3:
+                            $status .= 'Получена заявка';
+                            break;
+                        default:
+                            $status .= 'Счет на предопл. заказчику...{ и дальше нам не надо?}';
+                            break;
                     }
+
+                    /* if ($v['STAGE_ID'] === 'NEW') {
+                         $status .= 'Новая - Да';
+                     } elseif ($v['STAGE_ID'] === 1) {
+                         $status .= 'В оработке';
+                     } elseif ($v['STAGE_ID'] === 2) {
+                         $status .= 'Проверена страховка перевозчика';
+                     } elseif ($v['STAGE_ID'] < 3) {
+                         $status .= 'Получена заявка';
+                     } else {
+                         $status .= 'Счет на предопл. заказчику...{ и дальше нам не надо?}';
+                     }*/
 
 
                     $data[$k]['bitrix_id'] = $v['ID'];
@@ -130,12 +148,12 @@ class UpdateAllController extends Controller
     }
 
     /*Принимает строку локации
-     *(string)L1145.286|AДзержинск=AНижегородская область=AРоссия=56.2440992=43.4351805|BМинск=BМинская область=BБеларусь=53.9045398=27.5615244
-     * парсит на состовляющие
-     * возвращает массив вида
-     * Array ( [from] => Array ( [0] => Дзержинск [1] => Нижегородская область [2] => Россия )
-     *         [to] => Array ( [0] => Минск [1] => Минская область [2] => Беларусь ) [across] => )
-     * */
+   *(string)L1145.286|AДзержинск=AНижегородская область=AРоссия=56.2440992=43.4351805|BМинск=BМинская область=BБеларусь=53.9045398=27.5615244
+   * парсит на состовляющие
+   * возвращает массив вида
+   * Array ( [from] => Array ( [0] => Дзержинск [1] => Нижегородская область [2] => Россия )
+   *         [to] => Array ( [0] => Минск [1] => Минская область [2] => Беларусь ) [across] => )
+   * */
 
     public function parseLocation($source)
     {
@@ -181,7 +199,7 @@ class UpdateAllController extends Controller
         return (array)$result;
     }
 
-
+    //DELETE FROM `deals` WHERE deals.id <  170
     /*
      * принимает чистый массив
      * пишет в бд
@@ -189,34 +207,42 @@ class UpdateAllController extends Controller
      */
     public function addDataToDb($clear_data)
     {
-$rows = array();
-       foreach ($clear_data as $k=> $v){
-           $rows[$k]=$v;
+        $lastDealId = Deal::latest()->first()->id_bitrix;
 
-           $from = serialize($v['deal_location_from']);
-            $to = serialize($v['deal_location_to']);
-           $deal = new Deal;
+        $rows = array();
+        foreach ($clear_data as $k => $v) {
+            $rows[$k] = $v;
 
-           $deal-> id_bitrix=$v['bitrix_id'] ;
-           $deal-> deal_status= $v['deal_status'];
-           $deal-> deal_number= $v['bitrix_id'];
-           $deal-> deal_title= $v['deal_title'];
-           $deal-> deal_location_across=$v['deal_location_across'] ;
-           $deal-> deal_delivery_date= $v['deal_delivery_date']['date'];
-           $deal-> deal_loading_date= $v['deal_loading_date']['date'];
-           $deal-> deal_location_from= $v['deal_location_from'];
-           $deal-> deal_location_to=  $v['deal_location_to'];
-           $deal-> deal_transport_type= $v['deal_transport_type'];
-           $deal-> deal_cargo_params= $v['deal_cargo_params'];
-           $deal-> deal_special_conditions= $v['deal_special_conditions'];
+            if ($v['bitrix_id'] > $lastDealId) {
+                $from = serialize($v['deal_location_from']);
+                $to = serialize($v['deal_location_to']);
+                $deal = new Deal;
 
-           $deal->save();
-       }
+                $deal->id_bitrix = $v['bitrix_id'];
+                $deal->deal_status = $v['deal_status'];
+                $deal->deal_number = $v['bitrix_id'];
+                $deal->deal_title = $v['deal_title'];
+                $deal->deal_location_across = $v['deal_location_across'];
+                $deal->deal_delivery_date = $v['deal_delivery_date']['date'];
+                $deal->deal_loading_date = $v['deal_loading_date']['date'];
+                $deal->deal_location_from = $v['deal_location_from'];
+                $deal->deal_location_to = $v['deal_location_to'];
+                $deal->deal_transport_type = $v['deal_transport_type'];
+                $deal->deal_cargo_params = $v['deal_cargo_params'];
+                $deal->deal_special_conditions = $v['deal_special_conditions'];
+
+                $deal->save();
+            }
+
+
+        }
 
         $response_message = $rows;
 
         return $response_message;
     }
+
+  
 
 
 }
