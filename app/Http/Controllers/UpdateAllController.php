@@ -242,7 +242,6 @@ class UpdateAllController extends Controller
         return $response_message;
     }
 
-  
-
+ 
 
 }
