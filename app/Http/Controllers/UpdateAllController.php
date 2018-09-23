@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Deal;
+use App\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB; //фасад
@@ -127,7 +128,7 @@ class UpdateAllController extends Controller
                     //$data[$k]['deal_number'] = $v['TITLE'];
                     $data[$k]['deal_title'] = $v['UF_CRM_D_ITINERARY'];
 
-                    $data[$k]['deal_location_from'] = $locations['from'][2];
+                    $data[$k]['deal_location_from'] = $this->checkCountry($locations['from'][2]);
                     $data[$k]['deal_location_from_city'] = $locations['from'][0] . ' (' . $locations['from'][1] . ')';
                     $data[$k]['deal_location_to'] = $locations['to'][2];
                     $data[$k]['deal_location_to_city'] = $locations['to'][0] . ' (' . $locations['to'][1] . ')';
@@ -241,7 +242,26 @@ class UpdateAllController extends Controller
 
         return $response_message;
     }
+    /*Принимает (string)Страну
+     * проверяет на наличия в бд
+     * возвращает (int)id
+     */
+    public function checkCountry ($name) {
 
- 
+        $id = DB::table('countries')->select('id')->where('full_name' , $name)->get();
+      /*if(!$id){
+          $id = 'test';
+          $c = new Country;
+          $c->full_name = $name;
+          $id  = DB::table('countries')->select('id')->where('full_name' , $name)->get();
+
+      }
+
+
+      print_r($id->id);*/
+        return $name;
+    }
+
+
 
 }
