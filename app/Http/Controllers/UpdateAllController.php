@@ -130,7 +130,7 @@ class UpdateAllController extends Controller
 
                     $data[$k]['deal_location_from'] = $this->checkCountry($locations['from'][2]);
                     $data[$k]['deal_location_from_city'] = $locations['from'][0] . ' (' . $locations['from'][1] . ')';
-                    $data[$k]['deal_location_to'] = $locations['to'][2];
+                    $data[$k]['deal_location_to'] = $this->checkCountry($locations['to'][2]);
                     $data[$k]['deal_location_to_city'] = $locations['to'][0] . ' (' . $locations['to'][1] . ')';
                     $data[$k]['deal_location_across'] = $locations['across']; //&
 
@@ -173,13 +173,13 @@ class UpdateAllController extends Controller
         foreach ($from as $key => $value) {
             if (!is_numeric($value)) {
                 //$B = preg_match('/[A-ZА-Я]{2}/',  $str);
-                $location['from'][] = mb_substr($value, 1);
+                $location['from'][] = ucfirst(mb_substr($value, 1));
             }
         }
         foreach ($to as $key => $value) {
             if (!is_numeric($value)) {
                 //$B = preg_match('/[A-ZА-Я]{2}/',  $str);
-                $location['to'][] = mb_substr($value, 1);
+                $location['to'][] =ucfirst(mb_substr($value, 1)) ;
             }
         }
         $location['across'] = '';
@@ -209,16 +209,24 @@ class UpdateAllController extends Controller
     public function addDataToDb($clear_data)
     {
         $lastDealId = Deal::latest()->first()->id_bitrix;
+        
+               // $lastDealId = 0;
+   
+  
 
         $rows = array();
         foreach ($clear_data as $k => $v) {
             $rows[$k] = $v;
 
             if ($v['bitrix_id'] > $lastDealId) {
+
                 $from = serialize($v['deal_location_from']);
                 $to = serialize($v['deal_location_to']);
-                $deal = new Deal;
+                //$from = DB::table('countries')->select('id')->where('full_name' , $v['deal_location_from']);
+                //$to = DB::table('countries')->select('id')->where('full_name' , $v['deal_location_to']);
 
+
+                $deal = new Deal;
                 $deal->id_bitrix = $v['bitrix_id'];
                 $deal->deal_status = $v['deal_status'];
                 $deal->deal_number = $v['bitrix_id'];
@@ -226,12 +234,11 @@ class UpdateAllController extends Controller
                 $deal->deal_location_across = $v['deal_location_across'];
                 $deal->deal_delivery_date = $v['deal_delivery_date']['date'];
                 $deal->deal_loading_date = $v['deal_loading_date']['date'];
-                $deal->deal_location_from = $v['deal_location_from'];
-                $deal->deal_location_to = $v['deal_location_to'];
+                $deal->deal_location_from = $this->checkCountry($v['deal_location_from']);
+                $deal->deal_location_to = $this->checkCountry($v['deal_location_to']);
                 $deal->deal_transport_type = $v['deal_transport_type'];
                 $deal->deal_cargo_params = $v['deal_cargo_params'];
                 $deal->deal_special_conditions = $v['deal_special_conditions'];
-
                 $deal->save();
             }
 
@@ -248,7 +255,7 @@ class UpdateAllController extends Controller
      */
     public function checkCountry ($name) {
 
-        $id = DB::table('countries')->select('id')->where('full_name' , $name)->get();
+        //$id = DB::table('countries')->select('id')->where('full_name','=' , $name)->get();
       /*if(!$id){
           $id = 'test';
           $c = new Country;
@@ -256,10 +263,18 @@ class UpdateAllController extends Controller
           $id  = DB::table('countries')->select('id')->where('full_name' , $name)->get();
 
       }
+*/
+      //$id = DB::table('countries')->select('id')->where('full_name','=' , $name)->first();
+     //$id->toArray();
+     // DB::setFetchMode('FETCH_ASSOC');
+      //DB::setFetchMode(PDO::FETCH_ASSOC);
+     $id  = DB::table('countries')->select('id')->where('full_name' , $name)->value('id');
 
-
-      print_r($id->id);*/
-        return $name;
+     if(!$id){
+      $id = $name;
+     }
+    // $id = (array)$id;
+        return $id;
     }
 
 

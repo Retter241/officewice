@@ -18,17 +18,25 @@ class CountryOneController extends Controller
         $match  = $end = array_slice(explode('/', $request->url() ), -1)[0];
 
         //получаем id по названию страны
-        $country_id = DB::table('countries')->select('id')->where('full_name',$match)->get();
-        $id = $country_id[0]->id;
+        $country_id = DB::table('countries')->select('id')->where('seo_url',$match)->value('id');
+        //$id = $country_id->id;
+        $id = $country_id;
 
         //получаем все сделки по стране
-        $all_deals = DB::table('deals')->where('country_id', $id)->get();
+        //$deals_from = DB::table('deals')->select('*')->where('cou', $id)->get();
+        $deals_to = DB::table('deals')->select('*')->where('deal_location_from', $id)->get();
+        $deals_from = DB::table('deals')->select('*')->where('deal_location_to', $id)->get();
+
+        //$all_deals = $deals_from . $deals_to;
+       
 
 
+var_dump($match ,$country_id);
 
 
         return view('country', [
-            'all_deals' => $all_deals ,
+            'deals_from' => $deals_from ,
+            'deals_to' => $deals_to ,
             'req' =>   $id
         ]);
 
