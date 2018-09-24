@@ -2,8 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="147b9f8a-83d8-4792-8e02-e0a235e06d6b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/LaravelOfficeWice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LaravelOfficeWice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Country.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Deal.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CountryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CountryOneController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/DealController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_171549_create_countries_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_171637_create_orders_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_171723_create_deals_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_172351_change_deals_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_172757_change_deals_table2.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_172917_change_deals_table3.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_173233_change_orders_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_173642_change_deals_table4.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_195234_change_countries_table2.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_225932_update_deals_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_230735_change_deals_table21.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laraOWCountries.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/countries.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/country.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/deal.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/test.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UpdateAllController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UpdateAllController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands.bcp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/commands.bcp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_10_125305_create_order_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_172236_create_managers_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_10_125651_create_deal_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_10_131125_update_order_table1.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_13_173538_change_orders_table2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,18 +50,30 @@
     <session id="336052148">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="724" />
+          <entry key="php" value="964" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="724" />
+          <entry key="Blade" value="45" />
+          <entry key="PHP" value="919" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="php" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Blade" value="3" />
         </counts>
       </usages-collector>
     </session>
@@ -9626,44 +9666,7 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_10_125305_create_order_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_10_125651_create_deal_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_10_131125_update_order_table1.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UpdateAllController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1188">
-              <caret line="92" column="14" selection-start-line="92" selection-start-column="14" selection-end-line="92" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -9687,6 +9690,9 @@
         <option value="$PROJECT_DIR$/database/migrations/2018_09_10_125305_create_order_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_10_125651_create_deal_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_10_131125_update_order_table1.php" />
+        <option value="$PROJECT_DIR$/resources/views/country.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/deal.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/countries.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UpdateAllController.php" />
       </list>
     </option>
@@ -9784,11 +9790,9 @@
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1366" />
+    <option name="height" value="728" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -9797,13 +9801,57 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="LaravelOfficeWice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaravelOfficeWice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaravelOfficeWice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaravelOfficeWice" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaravelOfficeWice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaravelOfficeWice" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaravelOfficeWice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaravelOfficeWice" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaravelOfficeWice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaravelOfficeWice" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaravelOfficeWice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaravelOfficeWice" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../localhost/wpTempate" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
@@ -9846,18 +9894,17 @@
       <option name="presentableId" value="Default" />
       <updated>1536228313359</updated>
       <workItem from="1536228316458" duration="3831000" />
-      <workItem from="1536838434325" duration="7019000" />
+      <workItem from="1536838434325" duration="12698000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10850000" />
+    <option name="totallyTimeSpent" value="16529000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1366" height="728" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4877651" visible="true" weight="0.10665658" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4877651" visible="true" weight="0.287902" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" sideWeight="0.5122349" side_tool="true" weight="0.29464287" />
@@ -9876,7 +9923,7 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.32980332" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
@@ -10021,10 +10068,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/country.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/deal.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/countries.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UpdateAllController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
-          <caret line="92" column="14" selection-start-line="92" selection-start-column="14" selection-end-line="92" selection-end-column="14" />
+        <state relative-caret-position="272">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>

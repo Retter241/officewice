@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateOrderTable1 extends Migration
+class ChangeDealsTable4 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class UpdateOrderTable1 extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
-
-
-            $table->index('deal_id');
-            $table->foreign('deal_id')->references('id')->on('deal');
-
-
-
+        Schema::table('deals', function (Blueprint $table) {
             //
+            $table->dropColumn('deal_location_from');
+            $table->dropColumn('deal_location_to');
         });
     }
 
@@ -32,7 +27,7 @@ class UpdateOrderTable1 extends Migration
      */
     public function down()
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('deals', function (Blueprint $table) {
             //
         });
     }
