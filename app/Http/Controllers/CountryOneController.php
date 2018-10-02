@@ -22,6 +22,7 @@ class CountryOneController extends Controller
         //$id = $country_id->id;
         $id = $country_id;
 
+        $breadcrumbs = DB::table('countries')->select('full_name')->where('seo_url',$match)->value('full_name');
         //получаем все сделки по стране
         //$deals_from = DB::table('deals')->select('*')->where('cou', $id)->get();
         $deals_to = DB::table('deals')->select('*')->where('deal_location_from', $id)->get();
@@ -30,14 +31,19 @@ class CountryOneController extends Controller
         //$all_deals = $deals_from . $deals_to;
        
 
+        $all_countries = $this->all_countries;
+        //$all_countries = DB::table('countries')->get();
 
-var_dump($match ,$country_id);
+
+//var_dump($match ,$country_id);
 
 
         return view('country', [
             'deals_from' => $deals_from ,
             'deals_to' => $deals_to ,
-            'req' =>   $id
+            'req' =>   $id,
+            'all_countries' => $all_countries,
+            'breadcrumbs' => $breadcrumbs
         ]);
 
 

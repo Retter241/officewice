@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//главная страница
+Route::get('/', 'HomeController@index');
 
 //раздел авторизации
 Route::get('login' , 'Auth\AuthController@showLoginForm'); //отображение формы -> отправка post
@@ -21,7 +20,7 @@ Route::post('login' , 'Auth\AuthController@login'); // для входа ( по�
 //Route::get('logout' , 'Auth\AuthController@logout');//для выхода
 Route::get('logout' , function (){
     Auth::logout();
-    return view('welcome');
+    return view('home');
 });//для выхода
 
 
@@ -56,3 +55,26 @@ Route::get('/deal/{deal_id?}', 'DealController@getDeal')->where('deal_id' , '[\w
 
 //раздел обновления от битрикса в БД
 Route::get('/update', 'UpdateAllController@index');//->name('update');
+
+
+
+
+//тестирование
+Route::get('/test', 'TestController@index');//->name('update');
+
+Route::get('/storage/{filename}', function ($filename)
+{
+    $path = storage_path('public/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});

@@ -30,15 +30,18 @@ class UpdateAllController extends Controller
 
         $clear_data = $this->buildData($bx_response);
 
+        if($clear_data){
+          DB::delete('delete from deals');
+          $response_message = 'ok';
+        }
 
-        $response_message = $this->addDataToDb($clear_data);
+
+       // $response_message = $this->addDataToDb($clear_data);
         // echo Deal::latest()->first()->id_bitrix;
 
 
         return view('update.index')->with('response_message', $response_message);
     }
-
-
     /*
      * init bx api method
      * возвращает черновой массив данных
@@ -80,10 +83,9 @@ class UpdateAllController extends Controller
 
         foreach ($bx_response as $item => $list) {
             foreach ($list as $k => $v) {
-                $re = preg_match($pattern, $v['TITLE']);
+                $re = preg_match($pattern, $v['TITLE']); // проверка на 0:
                 //$v['UF_SH_LOCATION_FROM']) !== NULL and ;
-                if (/*$re and*/
-                    $v['OPENED'] == 'Y' and $v['CLOSED'] == 'N') {
+                if ($re and $v['OPENED'] == 'Y' and $v['CLOSED'] == 'N') {
 
                     //$data[$k] = $v; // All Data for test
 
@@ -129,20 +131,34 @@ class UpdateAllController extends Controller
                     $data[$k]['deal_title'] = $v['UF_CRM_D_ITINERARY'];
 
                     $data[$k]['deal_location_from'] = $this->checkCountry($locations['from'][2]);
-                    $data[$k]['deal_location_from_city'] = $locations['from'][0] . ' (' . $locations['from'][1] . ')';
+                    //$data[$k]['deal_location_from_city'] = $locations['from'][0] . ' (' . $locations['from'][1] . ')';
                     $data[$k]['deal_location_to'] = $this->checkCountry($locations['to'][2]);
-                    $data[$k]['deal_location_to_city'] = $locations['to'][0] . ' (' . $locations['to'][1] . ')';
+                    //$data[$k]['deal_location_to_city'] = $locations['to'][0] . ' (' . $locations['to'][1] . ')';
                     $data[$k]['deal_location_across'] = $locations['across']; //&
 
                     $data[$k]['deal_delivery_date'] = $this->dateParse($v['UF_CRM_1483628352']);//Срок доставки груза:
                     $data[$k]['deal_loading_date'] = $this->dateParse($v['UF_CRM_1483628167']); //Дата и время подачи транспортного средства:
-                    $data[$k]['deal_transport_type'] = '{Требования к автотранспорту:} ' . $v['UF_CRM_1483673991'];
-                    $data[$k]['deal_cargo_params'] = $v['UF_CRM_1474277632'] . ' {Обьем (м3) :}' . $v['UF_CRM_1467791573'] . '{ масса брутто ( кг ) :}' . $v['UF_CRM_1467791573'];
-                    $data[$k]['deal_special_conditions'] = ' { Способ погрузки:} ' . $v['UF_CRM_1483674041'];
+                    $data[$k]['deal_transport_type'] = $v['UF_CRM_1483673991'];//'{Требования к автотранспорту:} ' . 
+                    $data[$k]['deal_cargo_params'] = $v['UF_CRM_1474277632'] . '/' . $v['UF_CRM_1467791573'] . '/' . $v['UF_CRM_1467791573'];// $v['UF_CRM_1474277632'] . ' {Обьем (м3) :}' . $v['UF_CRM_1467791573'] . '{ масса брутто ( кг ) :}' . $v['UF_CRM_1467791573']
+                    $data[$k]['deal_special_conditions'] =  $v['UF_CRM_1483674041'];//' { Способ погрузки:} ' .
 
                 }
             }
         }
+
+       /* echo '<pre>';
+        var_dump($bx_response);
+        echo '</pre>';
+        echo '<hr/>';
+        echo '<pre>';
+        var_dump($data);
+        echo '</pre>';*/
+
+
+
+
+
+
 
         return $data;
         //return list of deals
@@ -162,12 +178,18 @@ class UpdateAllController extends Controller
 //$res[0] - ненадо
 
 //$res[1] - откуда
-        $from = explode("A=", $res[1]);
-        $from = explode("=", $from[0]);
+         if (array_key_exists('1', $res)) {  $from = explode("=", $res[1]);}
+        else{$from[2][] = 'Нет данных';}
+
+        //$from = explode("A=", $res[1]);
+        //$from = explode("=", $from[0]);
 
 //$res[2] - куда
-        $to = explode("В=", $res[2]);
-        $to = explode("=", $to[0]);
+          if (array_key_exists('2', $res)) {  $to = explode("=", $res[2]);}
+        else{$to[2][] = 'Нет данных';}
+
+        //$to = explode("В=", $res[2]);
+       // $to = explode("=", $to[0]);
 
 
         foreach ($from as $key => $value) {
@@ -208,17 +230,22 @@ class UpdateAllController extends Controller
      */
     public function addDataToDb($clear_data)
     {
-        $lastDealId = Deal::latest()->first()->id_bitrix;
+        //$lastDealId = Deal::latest()->first()->id_bitrix;
         
-               // $lastDealId = 0;
+      //$lastDealId = 0;
+
+//$countNewDeals = 0;
+
    
   
 
         $rows = array();
         foreach ($clear_data as $k => $v) {
+          //$countNewDeals++;
             $rows[$k] = $v;
-
-            if ($v['bitrix_id'] > $lastDealId) {
+            $DealId  = Deal::where('id_bitrix', $v['bitrix_id'])->first();
+            //if ($v['bitrix_id'] > $lastDealId) {
+            if (!$DealId) {
 
                 $from = serialize($v['deal_location_from']);
                 $to = serialize($v['deal_location_to']);
@@ -240,12 +267,17 @@ class UpdateAllController extends Controller
                 $deal->deal_cargo_params = $v['deal_cargo_params'];
                 $deal->deal_special_conditions = $v['deal_special_conditions'];
                 $deal->save();
+                 $response_message = 'Последнее обновление: '.now(); //. ' Новых - '.$countNewDeals;
+            }
+            else {
+              $lastDealUpdate =  Deal::latest()->first()->updated_at;
+               $response_message = 'Последнее обновление: '.$lastDealUpdate;
             }
 
 
         }
 
-        $response_message = $rows;
+        //$response_message = 'Последнее обновление: '.now();
 
         return $response_message;
     }

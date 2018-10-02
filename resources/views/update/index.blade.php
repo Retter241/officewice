@@ -7,10 +7,12 @@
  */
 
 ?>
+<?  echo $response_message;  ?>
 
 <pre>
- {{ var_dump($response_message) }}
-</pre>
+ {{-- var_dump($response_message) --}}
+</pre>{{--
+
 <!--
 <h3 style="width: 100%;">Все активные : opened=Y</h3>
 <table>
@@ -49,3 +51,5 @@
 
 
 </table>-->
+
+--}}
