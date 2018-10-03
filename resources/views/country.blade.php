@@ -112,7 +112,7 @@
 
                             <div class="col-md-1 cargo-date">
 
-                                <p>{{ $deal->deal_delivery_date }}</p> {{-- срок доставки груза --}}
+                                <p>{{ $deal->deal_loading_date }}</p> {{-- срок доставки груза --}}
 
                             </div>
 
@@ -230,7 +230,7 @@
 
                             <div class="col-md-1 cargo-date">
 
-                                <p>{{ $deal->deal_delivery_date }}</p> {{-- срок доставки груза --}}
+                                <p>{{ $deal->deal_loading_date }}</p> {{-- срок доставки груза --}}
 
                             </div>
 

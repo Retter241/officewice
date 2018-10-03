@@ -27,9 +27,11 @@ class Deal extends Model
 
 
 
-    public function country()
+    public function countries()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsToMany('App\Country');
     }
+
+
 
 }

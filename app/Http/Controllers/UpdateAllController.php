@@ -22,6 +22,11 @@ class UpdateAllController extends Controller
 
     public function index($response_message = array())
     {
+      $mtime = microtime();        //Считываем текущее время
+$mtime = explode(" ",$mtime);    //Разделяем секунды и миллисекунды
+// Составляем одно число из секунд и миллисекунд
+// и записываем стартовое время в переменную
+$tstart = $mtime[1] + $mtime[0];
 
         $this->method = 'crm.deal.list';
         $this->params = array("auth" => 'z2uwj3jxwdebkz46', 'order' => array('ID' => 'DESC'));
@@ -32,15 +37,25 @@ class UpdateAllController extends Controller
 
         if($clear_data){
           DB::delete('delete from deals');
-          $response_message = 'ok';
+          $db_status = 'Статус : База данных обновлена';
         }
 
 
-       // $response_message = $this->addDataToDb($clear_data);
+        $response_message = $this->addDataToDb($clear_data);
         // echo Deal::latest()->first()->id_bitrix;
+// Делаем все то же самое, чтобы получить текущее время
+$mtime = microtime();
+$mtime = explode(" ",$mtime);
+$mtime = $mtime[1] + $mtime[0];
+$totaltime = ($mtime - $tstart);//Вычисляем разницу
+// Выводим не экран
+$time = "Время выполнения:  {$totaltime} секунд " ;
 
-
-        return view('update.index')->with('response_message', $response_message);
+        return view('update.index')->with([
+          'response_message'=> $response_message,
+          'db_status' => $db_status,
+          'time' => $time
+        ]);
     }
     /*
      * init bx api method
@@ -139,7 +154,7 @@ class UpdateAllController extends Controller
                     $data[$k]['deal_delivery_date'] = $this->dateParse($v['UF_CRM_1483628352']);//Срок доставки груза:
                     $data[$k]['deal_loading_date'] = $this->dateParse($v['UF_CRM_1483628167']); //Дата и время подачи транспортного средства:
                     $data[$k]['deal_transport_type'] = $v['UF_CRM_1483673991'];//'{Требования к автотранспорту:} ' . 
-                    $data[$k]['deal_cargo_params'] = $v['UF_CRM_1474277632'] . '/' . $v['UF_CRM_1467791573'] . '/' . $v['UF_CRM_1467791573'];// $v['UF_CRM_1474277632'] . ' {Обьем (м3) :}' . $v['UF_CRM_1467791573'] . '{ масса брутто ( кг ) :}' . $v['UF_CRM_1467791573']
+                    $data[$k]['deal_cargo_params'] = $v['UF_CRM_1474277632'] . ' - ' . $v['UF_CRM_1467791573'] . ' (обьем или масса)';// $v['UF_CRM_1474277632'] . ' {Обьем (м3) :}' . $v['UF_CRM_1467791573'] . '{ масса брутто ( кг ) :}' . $v['UF_CRM_1467791573']
                     $data[$k]['deal_special_conditions'] =  $v['UF_CRM_1483674041'];//' { Способ погрузки:} ' .
 
                 }
