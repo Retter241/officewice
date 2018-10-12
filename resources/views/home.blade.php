@@ -27,149 +27,42 @@
 
                 <h2>Грузы по странам (экспорт и импорт):</h2>
 
-                <a class="d-block .d-md-none d-lg-none d-xl-none navi-page" href="#special">Смотреть специальные грузы</a>
+                <a class="d-block .d-md-none d-lg-none d-xl-none navi-page" href="#special">Смотреть специальные
+                    грузы</a>
 
                 <div class="row no-gutters countries-grid">
+                @php
+                    $i = 0;
+                @endphp
 
-                    <div class="col-12 country-wrap">
-
-                        <div class="row">
-
-                            <div class="col-3 country-flag">
-
-                                <img class="img-fluid" src="{{URL::asset('img/flags-normal/RU.PNG')}}" alt="Россия">
-
+                @foreach ($all_countries as $country)
+                    @if($country->deals_count !== NULL and $i !== 5)
+                        @php
+                            $i++;
+                        @endphp
+                        <!--  <item>  -->
+                            <div class="col-12 country-wrap">
+                                <div class="row">
+                                    <div class="col-3 country-flag">
+                                    <!--<img class="img-fluid" src="{{URL::asset(' $country->flag ')}}">-->
+                                        <img class="img-fluid" src="{{ $country->flag }}"
+                                             alt="{{ $country->full_name }}">
+                                    </div>
+                                    <div class="col-5 country-name">
+                                        <p class="h4">{{ $country->full_name }}</p>
+                                        <p>Грузов (из/в): {{ $country->deals_count  }}</p>
+                                    </div>
+                                    <div class="col-4 country-btn">
+                                        <a href="{{ url('countries/'.$country->seo_url) }}">
+                                            <button type="button" class="btn btn-primary">Смотреть</button>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+                            <!--  </item>  -->
+                        @endif
+                    @endforeach
 
-                            <div class="col-5 country-name">
-
-                                <p class="h4">Россия</p>
-
-                                <p>Грузов (из/в): 7</p>
-
-                            </div>
-
-                            <div class="col-4 country-btn">
-
-                                <a href="#"><button type="button" class="btn btn-primary">Смотреть</button></a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-12 country-wrap">
-
-                        <div class="row">
-
-                            <div class="col-3 country-flag">
-
-                                <img class="img-fluid" src="{{URL::asset('img/flags-normal/KZ.PNG')}}" alt="Казахстан">
-
-                            </div>
-
-                            <div class="col-5 country-name">
-
-                                <p class="h4">Казахстан</p>
-
-                                <p>Грузов (из/в): 12</p>
-
-                            </div>
-
-                            <div class="col-4 country-btn">
-
-                                <a href="#"><button type="button" class="btn btn-primary">Смотреть</button></a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-12 country-wrap">
-
-                        <div class="row">
-
-                            <div class="col-3 country-flag">
-
-                                <img class="img-fluid" src="{{URL::asset('img/flags-normal/PT.PNG')}}" alt="Португалия">
-
-                            </div>
-
-                            <div class="col-5 country-name">
-
-                                <p class="h4">Португалия</p>
-
-                                <p>Грузов (из/в): 1</p>
-
-                            </div>
-
-                            <div class="col-4 country-btn">
-
-                                <a href="#"><button type="button" class="btn btn-primary">Смотреть</button></a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-12 country-wrap">
-
-                        <div class="row">
-
-                            <div class="col-3 country-flag">
-
-                                <img class="img-fluid" src="{{URL::asset('img/flags-normal/BY.PNG')}}" alt="Беларусь">
-
-                            </div>
-
-                            <div class="col-5 country-name">
-
-                                <p class="h4">Беларусь</p>
-
-                                <p>Грузов (из/в): 40</p>
-
-                            </div>
-
-                            <div class="col-4 country-btn">
-
-                                <a href="#"><button type="button" class="btn btn-primary">Смотреть</button></a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-12 country-wrap">
-
-                        <div class="row">
-
-                            <div class="col-3 country-flag">
-
-                                <img class="img-fluid" src="{{URL::asset('img/flags-normal/ES.PNG')}}" alt="Испания">
-
-                            </div>
-
-                            <div class="col-5 country-name">
-
-                                <p class="h4">Испания</p>
-
-                                <p>Грузов (из/в): 8</p>
-
-                            </div>
-
-                            <div class="col-4 country-btn">
-
-                                <a href="#"><button type="button" class="btn btn-primary">Смотреть</button></a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
 
                 </div>
 

@@ -100,6 +100,7 @@ class Connection implements ConnectionInterface
      * @var int
      */
     protected $fetchMode = PDO::FETCH_OBJ;
+   // protected $fetchMode = PDO::FETCH_ASSOC;
 
     /**
      * The number of active transactions.

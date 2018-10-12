@@ -7,14 +7,14 @@
  */
 
 ?>
-<?  echo $db_status;  ?><br/>
-<?  echo $time;  ?><br/>
-<?  echo $response_message;  ?><br/>
+<? // echo $db_status;  ?><br/>
+<? // echo $time;  ?><br/>
+<? // echo $response_message;  ?><br/>
 
 
 
 <pre>
- {{-- var_dump($response_message) --}}
+ {{ dd($response_message) }}
 </pre>{{--
 
 <!--

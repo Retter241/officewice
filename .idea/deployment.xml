@@ -2,7 +2,28 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
-      <paths name="bitrix">
+      <paths name="4living.by">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="belintercom.com">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$/../../localhost/WpTemptate/belincomtour.com" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="dev retter">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="florist.by">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

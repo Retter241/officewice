@@ -31,7 +31,7 @@ class HomeController extends Controller
 $this->cargoByCountries();
 
 
-
+//var_dump($menu->id);
 
 
         return view('home' , [

@@ -9,7 +9,7 @@ class Deal extends Model
     //
     protected $fillable = ['id_bitrix','deal_status','deal_number','deal_title','deal_location_across',
         'deal_delivery_date','deal_loading_date','deal_location_from' ,
-        'deal_location_to', 'deal_transport_type' , 'deal_cargo_params' , 'deal_special_conditions'];
+        'deal_location_to', 'deal_transport_type' , 'deal_cargo_params' , 'deal_special_conditions' ,'country_id_from' , 'country_id_to'];
 
 
     /*public function user() {
@@ -27,7 +27,7 @@ class Deal extends Model
 
 
 
-    public function countries()
+    public function country()
     {
         return $this->belongsToMany('App\Country');
     }

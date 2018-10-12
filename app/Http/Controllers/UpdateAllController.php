@@ -32,6 +32,9 @@ $tstart = $mtime[1] + $mtime[0];
         $this->params = array("auth" => 'z2uwj3jxwdebkz46', 'order' => array('ID' => 'DESC'));
 
         $bx_response[] = $this->callB24Method($this->auth, $this->method, $this->params);
+        if($bx_response == '' or $bx_response == NULL ){
+            $db_status = 'Статус : Ответ битрикса не получен';
+        }
 
         $clear_data = $this->buildData($bx_response);
 
@@ -41,7 +44,18 @@ $tstart = $mtime[1] + $mtime[0];
         }
 
 
-        $response_message = $this->addDataToDb($clear_data);
+
+        $response_message = $this->addDataToDb($clear_data) . '<br/>';
+
+        $response_message .= 'Количество сделок: '. DB::table('deals')
+            ->select('id')
+            ->get()->count() . '<br/>';
+
+        $response_message .= $this->countDealsForCountry();
+
+
+
+
         // echo Deal::latest()->first()->id_bitrix;
 // Делаем все то же самое, чтобы получить текущее время
 $mtime = microtime();
@@ -98,9 +112,12 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
 
         foreach ($bx_response as $item => $list) {
             foreach ($list as $k => $v) {
-                $re = preg_match($pattern, $v['TITLE']); // проверка на 0:
-                //$v['UF_SH_LOCATION_FROM']) !== NULL and ;
-                if ($re and $v['OPENED'] == 'Y' and $v['CLOSED'] == 'N') {
+            	if (isset($v['TITLE'])) {
+            		 $re = preg_match($pattern, $v['TITLE']); // проверка на 0:
+            	}
+               
+                //$v['UF_SH_LOCATION_FROM']) !== NULL and  $v['UF_SH_LOCATION_FROM']) !== '';
+                if ($re and $v['OPENED'] == 'Y' and $v['CLOSED'] == 'N' and $v['UF_SH_LOCATION_FROM'] != NULL and $v['UF_SH_LOCATION_FROM'] != '') {
 
                     //$data[$k] = $v; // All Data for test
 
@@ -116,8 +133,8 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
                         case  1:
                             $status .= 'В оработке';
                             break;
-                        case 2:
-                            $status .= 'Проверена страховка перевозчика';
+                        case 20:
+                            $status .= 'Показать на сайте';
                             break;
                         case $v['STAGE_ID'] < 3:
                             $status .= 'Получена заявка';
@@ -146,9 +163,9 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
                     $data[$k]['deal_title'] = $v['UF_CRM_D_ITINERARY'];
 
                     $data[$k]['deal_location_from'] = $this->checkCountry($locations['from'][2]);
-                    //$data[$k]['deal_location_from_city'] = $locations['from'][0] . ' (' . $locations['from'][1] . ')';
+                  
                     $data[$k]['deal_location_to'] = $this->checkCountry($locations['to'][2]);
-                    //$data[$k]['deal_location_to_city'] = $locations['to'][0] . ' (' . $locations['to'][1] . ')';
+                
                     $data[$k]['deal_location_across'] = $locations['across']; //&
 
                     $data[$k]['deal_delivery_date'] = $this->dateParse($v['UF_CRM_1483628352']);//Срок доставки груза:
@@ -187,7 +204,7 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
    *         [to] => Array ( [0] => Минск [1] => Минская область [2] => Беларусь ) [across] => )
    * */
 
-    public function parseLocation($source)
+    public function parseLocation($source = '')
     {
         $res = explode('|', $source);
 //$res[0] - ненадо
@@ -221,7 +238,7 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
         }
         $location['across'] = '';
 
-        return (array)$location;
+        return (array)$location ;
     }
 
     protected function dateParse($dateString)
@@ -281,6 +298,11 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
                 $deal->deal_transport_type = $v['deal_transport_type'];
                 $deal->deal_cargo_params = $v['deal_cargo_params'];
                 $deal->deal_special_conditions = $v['deal_special_conditions'];
+                
+                $deal->country_id_from = $this->checkCountry($v['deal_location_from']);
+                $deal->country_id_to = $this->checkCountry($v['deal_location_to']);
+                 
+
                 $deal->save();
                  $response_message = 'Последнее обновление: '.now(); //. ' Новых - '.$countNewDeals;
             }
@@ -322,6 +344,58 @@ $time = "Время выполнения:  {$totaltime} секунд " ;
      }
     // $id = (array)$id;
         return $id;
+    }
+
+    /*
+     * После обновления сделок
+     * обновляет поле deals_count - кол-во сделок в каждой стране
+     * в таблице countries
+     * возвращает статус
+     */
+    public function countDealsForCountry () {
+        $status = '';
+        $resp = 0;//количество используемых стран
+        $counter = [];//промежуточный массив для обновления кол-ва сделок в таблице стран для каждой страны
+        $res = [];//массив с итоговыми значениями
+
+        //получаем все страны
+        $countriesCounter = DB::table('countries')->select('*')->get();
+
+        //промежуточный массив для получения кол-ва сделок по странам
+        foreach ($countriesCounter as $k => $v) {
+            $counter['full_name'][] = $v->full_name;
+            $counter['link'][] = $v->link;
+            $counter['flag'][] = $v->flag;
+            $counter['seo_url'][] = $v->seo_url;
+            $counter['id'][] = $v->id;
+            $counter['count'][] = DB::table('deals')
+                ->select('id_bitrix')
+                ->where('country_id_from', '=', $v->id)
+                ->orWhere('country_id_to', '=', $v->id)
+                ->get()->count();
+            //обнулить все значения -  для заполнения актуальными
+            Country::where('id', $v->id)
+                ->update(['deals_count' => NULL]);
+        }
+
+        foreach ($counter['id'] as $key => $value) {
+            foreach ($counter['count'] as $key2 => $value2) {
+
+                if ($key == $key2 and $value2 != ' ') {
+
+                    // (int)id => (int)Кол-во сделок
+                    $res[$value] =  $value2;
+
+                    Country::where('id', $value)
+                        ->update(['deals_count' => $value2]);
+                    $resp++;//количество используемых стран
+                }
+
+            }
+        }
+        $status = 'Кол-во используемых стран: ' . $resp;
+
+        return $status;
     }
 
 
