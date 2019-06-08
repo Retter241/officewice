@@ -10,7 +10,7 @@ class UpdateAllController extends Controller
     ////https://crm.ow.by/rest/113/z2uwj3jxwdebkz46/profile/
     //// https://maps.googleapis.com/maps/api/geocode/json?latlng=57.5888943,34.5686003&key=AIzaSyD4IezL9BaTBFs9Kry-HtJuJOcIZAPIc90
 
-    protected $auth = array('access_token' => 'z2uwj3jxwdebkz46', 'domain' => 'crm.ow.by');
+    protected $auth = array('access_token' => 'xxxxxx', 'domain' => 'xxxxx.com');
     protected $method;
     protected $params;
     protected $i;
