@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class UpdateAllController extends Controller
 {
-    ////https://crm.ow.by/rest/113/z2uwj3jxwdebkz46/profile/
+    ////https://crm.ow.by/rest/113/xx/profile/
     //// https://maps.googleapis.com/maps/api/geocode/json?latlng=57.5888943,34.5686003&key=AIzaSyD4IezL9BaTBFs9Kry-HtJuJOcIZAPIc90
 
     protected $auth = array('access_token' => 'xxxxxx', 'domain' => 'xxxxx.com');
@@ -19,7 +19,7 @@ class UpdateAllController extends Controller
     {
 
         $this->method = 'crm.deal.list';
-        $this->params = array("auth" => 'z2uwj3jxwdebkz46', 'order' => array('ID' => 'DESC'));
+        $this->params = array("auth" => 'xx', 'order' => array('ID' => 'DESC'));
 
         //$bx_response[] = $this->callB24Method($this->auth, $this->method, $this->params);
         $this->params['select'] = array('ID', 'CLOSED', 'UF_*');
